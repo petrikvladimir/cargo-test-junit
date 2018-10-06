@@ -21,7 +21,10 @@ pub fn get_args<'a>() -> clap::ArgMatches<'a> {
             .arg(name_arg)
             .arg(clap::Arg::with_name("features")
                 .long("features")
-                .value_name("FEATURES")))
+                .value_name("FEATURES"))
+            .arg(clap::Arg::with_name("target-dir")
+                .long("target-dir")
+                .value_name("TARGET-DIR")))
         .get_matches()
 }
 

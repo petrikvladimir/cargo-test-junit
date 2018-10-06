@@ -23,9 +23,14 @@ fn main() {
         .map(|x| format!(" --features {}", x))
         .unwrap_or("".to_string());
 
+    let target_dir = sub_match
+        .value_of("target-dir")
+        .map(|x| format!(" --target-dir {}", x))
+        .unwrap_or("".to_string());
+
     let ref name = args::get_file_name(matches).unwrap();
 
-    let output = get_test_output(features)
+    let output = get_test_output(features, target_dir)
         .map_err(|x| {
             if let duct::Error::Status(ref output) = x {
                 println!("{}", String::from_utf8_lossy(&output.stdout))
@@ -85,8 +90,8 @@ fn main() {
         .expect(&format!("unable to output XML to {}", name));
 }
 
-fn get_test_output(features: String) -> Result<duct::Output, duct::Error> {
-    duct::sh(format!("cargo test{}", features))
+fn get_test_output(features: String, target_dir: String) -> Result<duct::Output, duct::Error> {
+    duct::sh(format!("cargo test{}{}", target_dir, features))
         .env("RUSTFLAGS", "-A warnings")
         .stderr_to_stdout()
         .capture_stdout()
