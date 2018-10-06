@@ -51,6 +51,7 @@ fn main() {
     let test_suites = doc::el(d, "testsuites")
         .attr("name", name)
         .attr("errors", failures)
+        .attr("failures", failures)
         .attr("tests", totals);
 
     doc::append_child(d, &test_suites);
