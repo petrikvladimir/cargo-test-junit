@@ -55,7 +55,7 @@ fn main() {
 
     let test_suites = doc::el(d, "testsuites")
         .attr("name", name)
-        .attr("errors", failures)
+        .attr("errors", 0)
         .attr("failures", failures)
         .attr("tests", totals);
 
@@ -64,7 +64,7 @@ fn main() {
     for suite in &suites {
         let test_suite = doc::el(d, "testsuite")
             .attr("name", suite.name)
-            .attr("errors", suite.failed)
+            .attr("errors", 0)
             .attr("failures", suite.failed)
             .attr("tests", suite.total)
             .append_to(&test_suites);
